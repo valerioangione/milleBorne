@@ -8,11 +8,15 @@ public class TestJeuDeCartes {
 		
 		
 		
-		System.out.println("JEU:\n" + jeu.affichageJeuCartes());
+		System.out.println(jeu.affichageJeuDeCartes());
+		
+		
 		
 //        if (!jeu.checkCount()) {
 //            System.out.println("erreur de nombre");
 //        }
 
 	}
+	
+
 }
