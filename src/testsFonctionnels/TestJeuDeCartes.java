@@ -12,9 +12,9 @@ public class TestJeuDeCartes {
 		
 		
 		
-//        if (!jeu.checkCount()) {
-//            System.out.println("erreur de nombre");
-//        }
+        if (!jeu.checkCount()) {
+            System.out.println("erreur de nombre");
+        }
 
 	}
 	

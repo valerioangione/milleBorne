@@ -40,13 +40,13 @@ public class TestSabot {
 
 	// 4.2.c
 	public void questionC() {
-//		Carte cartePiochee = sabot.piocher();
-//		System.out.println("Je pioche " + cartePiochee);
+		Carte cartePiochee = sabot.piocher();
+		System.out.println("Je pioche " + cartePiochee);
 		for (Iterator<Carte> iterator = sabot.iterator(); iterator.hasNext();) {
 			Carte carte = iterator.next();
 			System.out.println("Je pioche " + carte);
 			iterator.remove();
-			Carte cartePiochee = sabot.piocher();
+			//Carte cartePiochee = sabot.piocher();
 			sabot.ajouterCarte(new Botte(cartes.Type.ACCIDENT));
 		}
 		Iterator<Carte> iterator = sabot.iterator();
@@ -56,7 +56,7 @@ public class TestSabot {
 	public static void main(String[] args) {
 		TestSabot testsabot = new TestSabot();
 		
-		testsabot.questionC();
+		testsabot.questionA();
 	}
 	
 }

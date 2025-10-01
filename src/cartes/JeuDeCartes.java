@@ -55,7 +55,22 @@ public class JeuDeCartes {
 	}
 	
 	
-	
+	public boolean checkCount() {
+		Carte[] jeuTest = donnerCartes();
+		boolean test = true;
+		int i = 0;
+		for (Configuration config : typesDeCartes) {
+			for (int j=0; j<config.getNbExemplaires();j++) {
+				test = jeuTest[i].equals(config.getCarte());
+//				System.out.println(jeuTest[i].toString() + " est bon");
+				i++;
+				if(!test) return test;
+			}
+		}
+		
+		
+		return test;
+	}
 	
 	private static class Configuration {
 		private int nbExemplaires;
