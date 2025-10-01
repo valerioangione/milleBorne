@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
-import cartes.*;
 
 public class GestionCartes {
 
@@ -35,7 +34,7 @@ public class GestionCartes {
 		return resultat;
 	}
 	
-	public static <T> boolean verifiermelange(List<T> list1, List<T> list2){
+	public static <T> boolean verifierMelange(List<T> list1, List<T> list2){
 		boolean test = true;
 		for (int i=0; i<list1.size();i++) {
 			test = Collections.frequency(list1, list1.get(i))==Collections.frequency(list2, list1.get(i));
@@ -68,4 +67,34 @@ public class GestionCartes {
 		
 		return resultat;
 	}
+	
+	public static <T> boolean verifierRassemblement(List<T> list) {
+		int i=0;
+		T element1;
+		T element2;
+		for(ListIterator<T>iterateur1 = list.listIterator();iterateur1.hasNext();) {
+			boolean pred = true;
+			element1=iterateur1.next();
+			for(ListIterator<T>iterateur2=list.listIterator(i);iterateur2.hasNext();) {
+				element2=iterateur2.next();
+				if(element1.equals(element2)) {
+					if(!pred) {
+						return false;
+					}
+				} else {
+					pred = false;
+				}
+			}
+			i++;
+		}
+		
+		return true;
+	}
+	
 }
+
+
+
+
+
+
