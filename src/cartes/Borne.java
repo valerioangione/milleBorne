@@ -12,5 +12,8 @@ public class Borne extends Carte {
 		txt.append(km).append(" km");
 		return txt.toString();
 	}
-
+	
+	public int getKm() {
+		return km;
+	}
 }

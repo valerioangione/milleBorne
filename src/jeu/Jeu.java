@@ -18,6 +18,6 @@ public class Jeu {
         }
         List<Carte> listeCartes = new ArrayList<>(listeCarteNonMelangee);
         listeCartes = GestionCartes.melanger(listeCartes);
-        sabot =new Sabot( (Carte[]) listeCartes.toArray());
+        this.sabot =new Sabot( (Carte[]) listeCartes.toArray());
 	}
 }
