@@ -16,4 +16,10 @@ public class Borne extends Carte {
 	public int getKm() {
 		return km;
 	}
+	
+	@Override
+	
+	public boolean equals(Object borne) {
+		return super.equals(borne) && this.getKm()==((Borne)borne).getKm();
+	}
 }
