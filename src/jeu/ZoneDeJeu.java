@@ -42,10 +42,11 @@ public class ZoneDeJeu {
 	}
 
 	public boolean peutAvancer() {
-		boolean etat = true;
+		boolean etat = false;
 		if(!bataille.isEmpty()) {
-			if(bataille.get(bataille.size()-1) instanceof Attaque)
-				etat = false;
+			if(bataille.get(bataille.size()-1) instanceof Parade par)
+				if(par.toString().equals("Feu vert"))
+					return true;			
 		}
 		return etat;
 	}
