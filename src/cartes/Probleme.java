@@ -17,7 +17,9 @@ public abstract class Probleme extends Carte {
 		return super.equals(probleme) && this.getType() == ((Probleme)probleme).getType();
 	}
 	
+	@Override
+	
 	public int hashCode() {
-		return 31*type.hashCode();
+		return 11*super.hashCode() + 31*type.hashCode();
 	}
 }

@@ -1,6 +1,7 @@
 package jeu;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import utils.GestionCartes;
 
 public class Jeu {
 	private Sabot sabot;
+	private HashSet<Joueur> joueurs = new HashSet<>();
 	
 	public Jeu() {
 		JeuDeCartes jeu = new JeuDeCartes();
@@ -19,5 +21,20 @@ public class Jeu {
         List<Carte> listeCartes = new ArrayList<>(listeCarteNonMelangee);
         listeCartes = GestionCartes.melanger(listeCartes);
         this.sabot =new Sabot( (Carte[]) listeCartes.toArray());
+	}
+	
+	public void inscrire(Joueur ... args) {
+		for(Joueur joueur : args) {
+			joueurs.add(joueur);
+		}
+	}
+	
+	public void distribuerCartes() {
+		for(int i = 0;i<6;i++) {
+			for(Joueur joueur:joueurs) {
+				if (joueur.getMain().getMain().size()<6) 
+					joueur.donner(sabot.piocher());
+			}
+		}
 	}
 }

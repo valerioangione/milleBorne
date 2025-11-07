@@ -6,11 +6,12 @@ public abstract class Carte {
 	
 	public boolean equals(Object carte) {
 		return this.getClass().equals(carte.getClass());
-		//return this.toString().equals(carte.toString());
+	}	
+	
+	@Override
+	
+	public int hashCode() {
+		return getClass().hashCode();
 	}
-	
-	
-	
-	
 	
 }

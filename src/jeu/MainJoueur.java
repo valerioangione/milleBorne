@@ -17,6 +17,10 @@ public class MainJoueur {
 		main.remove(carte);
 	}
 	
+	public LinkedList<Carte> getMain(){
+		return (LinkedList<Carte>) main;
+	}
+	
 	@Override
 	
 	public String toString() {
