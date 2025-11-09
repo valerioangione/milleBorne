@@ -50,6 +50,7 @@ public class Joueur {
 	public Carte prendreCarte(Sabot sabot) {
 		Carte carte = sabot.piocher();
 		main.prendre(carte);
+		System.out.println("Le joueur " + nom + " a piocher " + carte.toString());
 		return carte;
 	}
 	
@@ -61,12 +62,17 @@ public class Joueur {
 		return zonedejeu.estDepotAutorise(carte);
 	}
 	
+	public void deposer(Carte carte) {
+		zonedejeu.deposer(carte);
+	}
+	
 	public HashSet<Coup> coupsPossibles(HashSet<Joueur> participants){
 		HashSet<Coup> coups = new HashSet<>();
 		LinkedList<Carte> mainJoueur = main.getMain();
 		for(Iterator<Carte> iterateur = mainJoueur.iterator();iterateur.hasNext();) {
+			Carte carte = iterateur.next();
 			for(Joueur adv : participants) {
-				Coup coup = new Coup(this,iterateur.next(),adv);
+				Coup coup = new Coup(this,carte,adv);
 				if(coup.estValide())coups.add(coup);
 			}
 		}
@@ -94,6 +100,21 @@ public class Joueur {
 		ArrayList<Coup> liste = new ArrayList<Coup>(coups);
 		int indexAleatoire = random.nextInt(liste.size());
 		return liste.get(indexAleatoire);
+	}
+	
+	public String afficheEtatJoueur() {
+		StringBuilder txt = new StringBuilder();
+		txt.append("Bottes : ");
+		for(Botte botte : zonedejeu.getBottes()) 
+			txt.append(botte.toString()).append(" ");
+		txt.append("\nLimitation de vitesse : ").append(zonedejeu.donnerLimitationVitesse()==50);
+		txt.append("\nSommet bataille : ");
+		if(zonedejeu.getBataille().size()==0)
+			txt.append("null");
+		else
+			txt.append(zonedejeu.getBataille().get(zonedejeu.getBataille().size()-1));		
+		txt.append("\n").append(main.toString());
+		return txt.toString();
 	}
 	
 }

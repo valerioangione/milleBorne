@@ -12,6 +12,24 @@ public class ZoneDeJeu {
 	private Collection<Borne> bornes = new LinkedList<Borne>();
 	private Set<Botte> bottes = new HashSet<>();
 	
+	
+	
+	public List<Limite> getLimites() {
+		return limites;
+	}
+
+	public List<Bataille> getBataille() {
+		return bataille;
+	}
+
+	public Collection<Borne> getBornes() {
+		return bornes;
+	}
+
+	public Set<Botte> getBottes() {
+		return bottes;
+	}
+
 	public int donnerLimitationVitesse() {
 		int limite = 200;
 		if(!limites.isEmpty()&&!estPrioritaire()) {
@@ -32,11 +50,11 @@ public class ZoneDeJeu {
 	public void deposer(Carte carte) {
 		if(carte instanceof Borne borne) {
 			bornes.add(borne);
-			System.out.println("Deposer carte " + borne.toString() );
+			//System.out.println("Deposer carte " + borne.toString() );
 		}
 		else if(carte instanceof Limite limite) {
 			limites.add(limite);
-			System.out.println("Limite : " + donnerLimitationVitesse());
+			//System.out.println("Limite : " + donnerLimitationVitesse());
 		}
 		else if(carte instanceof Bataille bat)
 			bataille.add(bat);
@@ -76,26 +94,32 @@ public class ZoneDeJeu {
 	}
 	
 	public boolean estDepotBorneAutorise(Borne borne) {
-		boolean res = estDepotVertAutorise();
+		if(estPrioritaire())return true;
 		if(borne.getKm()>donnerLimitationVitesse()) {
 			return false;
 		}
 		if(borne.getKm()+donnerKmParcourus()>1000) {
 			return false;
 		}
-		return res;
+		return peutAvancer();
 	}
 	
 	public boolean estDepotLimiteAutorise(Limite limite) {
 		if(estPrioritaire())return false;
-		if(limite.toString().equals("limite 50")) {
-			if(limites.isEmpty())return true;
+		if(limites.isEmpty()) {
+			if(limite instanceof DebutLimite)return true;
+			else return false;
+		}
+		if(limite instanceof DebutLimite) {
 			if(limites.get(limites.size()-1).toString().equals("fin limite"))return true;
 		}else {
 			if(limites.get(limites.size()-1).toString().equals("limite 50"))return true;
 		}
 		return false;
 	}
+	
+
+	
 	
 	public boolean estDepotBatailleAutorise(Bataille bataille) {
 		Botte botte = new Botte(bataille.getType());

@@ -25,10 +25,13 @@ public class MainJoueur {
 	
 	public String toString() {
 		StringBuilder txt = new StringBuilder();
-		txt.append("Cartes de la main : ");
+		txt.append("Cartes de la main : [");
 		for(Iterator<Carte> iterateur = main.iterator(); iterateur.hasNext();) {
-			txt.append(iterateur.next().toString()).append(" ");
+			txt.append(iterateur.next().toString()).append(", ");
 		}
+		txt.deleteCharAt(txt.length() -1);
+		txt.deleteCharAt(txt.length() -1);
+		txt.append("]");
 		return txt.toString();
 	}
 

@@ -2,6 +2,7 @@ package jeu;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import utils.GestionCartes;
 public class Jeu {
 	private Sabot sabot;
 	private HashSet<Joueur> joueurs = new HashSet<>();
+	Iterator<Joueur> iterateur = joueurs.iterator();
 	
 	public Jeu() {
 		JeuDeCartes jeu = new JeuDeCartes();
@@ -20,7 +22,8 @@ public class Jeu {
         }
         List<Carte> listeCartes = new ArrayList<>(listeCarteNonMelangee);
         listeCartes = GestionCartes.melanger(listeCartes);
-        this.sabot =new Sabot( (Carte[]) listeCartes.toArray());
+        Carte[] sab = listeCartes.toArray(new Carte[0]);
+        this.sabot =new Sabot(sab);
 	}
 	
 	public void inscrire(Joueur ... args) {
@@ -38,4 +41,48 @@ public class Jeu {
 		}
 	}
 	
+	public void jouerTour(Joueur joueur) {
+		Carte carte = joueur.prendreCarte(sabot);
+		joueur.donner(carte);
+		System.out.println(joueur.getMain().toString());
+		Coup coup = joueur.choisirCoup(joueurs);
+		joueur.retirerDeLaMain(coup.getCarte());
+		if(coup.getCible()==null) {
+			sabot.ajouterCarte(coup.getCarte());
+		}
+		else
+			if(coup.getCible().estDepotAutorise(coup.getCarte()))
+				coup.getCible().deposer(coup.getCarte());
+			else
+				System.out.println("coup non autorisé");
+		System.out.println(coup.toString());
+	}
+	
+	public Joueur donnerJoueurSuivant() {
+		if(iterateur.hasNext()) 
+			return iterateur.next();
+		else {
+			iterateur = joueurs.iterator();
+			if(iterateur.hasNext())
+				return iterateur.next();
+			else
+				return null;
+		}
+	}
+	
+	public String lancer() {
+		boolean fini = false;
+		StringBuilder txt = new StringBuilder();
+		while(!fini && !sabot.estVide()) {
+			Joueur courant = donnerJoueurSuivant();
+			jouerTour(courant);
+			if(courant.donnerKmParcourus()==1000) {
+				fini = true;
+				txt.append(courant.toString()).append(" remporte la partie");
+			}
+		}
+		if(sabot.estVide())
+			txt.append("sabot vide");
+		return txt.toString();
+	}
 }
