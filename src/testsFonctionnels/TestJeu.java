@@ -20,5 +20,4 @@ public class TestJeu {
 		System.out.println(jeu.lancer());
 	}
 	
-
 }

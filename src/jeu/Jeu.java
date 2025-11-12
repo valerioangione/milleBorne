@@ -1,10 +1,13 @@
 package jeu;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NavigableSet;
+import java.util.TreeSet;
 
 import cartes.*;
 import utils.GestionCartes;
@@ -43,7 +46,7 @@ public class Jeu {
 	
 	public void jouerTour(Joueur joueur) {
 		Carte carte = joueur.prendreCarte(sabot);
-		joueur.donner(carte);
+		//joueur.donner(carte);
 		System.out.println(joueur.getMain().toString());
 		Coup coup = joueur.choisirCoup(joueurs);
 		joueur.retirerDeLaMain(coup.getCarte());
@@ -76,13 +79,43 @@ public class Jeu {
 		while(!fini && !sabot.estVide()) {
 			Joueur courant = donnerJoueurSuivant();
 			jouerTour(courant);
-			if(courant.donnerKmParcourus()==1000) {
+			if(courant.donnerKmParcourus()>=1000) {
 				fini = true;
 				txt.append(courant.toString()).append(" remporte la partie");
 			}
 		}
 		if(sabot.estVide())
 			txt.append("sabot vide");
+		txt.append(classement());
+		return txt.toString();
+	}
+	
+	public String classement() {
+		NavigableSet<Joueur> ordreJoueur = new TreeSet<>(
+				new Comparator<Joueur>() {
+					@Override
+					
+					public int compare(Joueur joueur1, Joueur joueur2) {
+						
+						int res = joueur2.donnerKmParcourus() - joueur1.donnerKmParcourus();
+						if(res==0)return joueur1.toString().compareTo(joueur2.toString());
+						else return res;
+					}
+				}
+			);
+		for(Iterator<Joueur> iterateur = joueurs.iterator();iterateur.hasNext();)
+			ordreJoueur.add(iterateur.next());
+		int i = 1;
+		StringBuilder txt = new StringBuilder();
+		for(Iterator<Joueur> iterateur = ordreJoueur.iterator(); iterateur.hasNext();) {
+			Joueur j = iterateur.next();
+			txt.append("\n");
+			txt.append(i);
+			txt.append(" : ").append(j.toString()).append(" => km parcourus : ");
+			txt.append(j.donnerKmParcourus());
+			
+			i++;
+		}
 		return txt.toString();
 	}
 }

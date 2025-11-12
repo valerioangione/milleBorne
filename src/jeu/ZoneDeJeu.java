@@ -94,9 +94,10 @@ public class ZoneDeJeu {
 	}
 	
 	public boolean estDepotBorneAutorise(Borne borne) {
-		if(estPrioritaire())return true;
+		boolean test = false;
+		if(estPrioritaire())test =  true;
 		if(borne.getKm()>donnerLimitationVitesse()) {
-			return false;
+			return false || test;
 		}
 		if(borne.getKm()+donnerKmParcourus()>1000) {
 			return false;
